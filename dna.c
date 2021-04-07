@@ -65,6 +65,30 @@ int mlcs(char a[], int n, char b[], int m) {
 int dlcs(char a[], int n, char b[], int m) {
     int length[MAX_SIZE + 1][MAX_SIZE + 1];
 
-    // preenche a matriz
-    return 2;
+    for(int linha = 0; linha < n; linha++){
+        for(int coluna = 0; coluna < m; coluna++){
+            if (linha == 0 || coluna == 0) {
+        // linha = or coluna = 0 
+                length[linha][0] = 0;
+                length[0][coluna] = 0;
+                //return 0;
+            }
+
+            if(a[linha-1] == b[coluna-1]){
+                length[linha][coluna] = length[linha-1][coluna-1];
+
+            }
+            else{
+                if(length[linha-1][coluna] > length[linha][coluna-1]){
+                    length[linha][coluna] = length[linha-1][coluna];
+                }
+                else{
+                    length[linha][coluna] = length[linha][coluna-1];
+                }
+            }
+        }
+        
+    }
+    return length[n][m];
+    
 }
