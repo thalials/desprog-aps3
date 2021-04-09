@@ -20,31 +20,29 @@ int mlcs_w(char a[], int n, char b[], int m, int length[MAX_SIZE + 1][MAX_SIZE +
     
     // menor caso
     if (n == 0 || m == 0) {
-        // n = or m = 0 
-        length[n][0] = 0;
-        length[0][m] = 0;
+        // n = 0 or m = 0 
+        length[n][m] = 0;
         return 0;
     }
-
-    // chamada recursiva
-    mlcs_w(a, n-1, b, m, length);
-    mlcs_w(a, n, b, m-1, length);
+    // analisa de o valor o valor é invalido 
+    if (length[n][m] != -1){
+        return length[n][m];
+    }
 
     // passo
     if (a[n - 1] == b[m - 1]) {
-        length[n][m] = length[n - 1][m - 1] + 1;
+        length[n][m] = mlcs_w(a, n - 1, b, m - 1, length) + 1;
     }
 
     else {
         int max;
-        if (length[n - 1][m] < length[n][m - 1]) {
-            max = length[n][m - 1];
+        if(mlcs_w(a, n - 1, b, m, length) > mlcs_w(a, n, b, m - 1, length)){            
+            max = mlcs_w(a, n - 1, b, m, length);
         }
         else {
-            max = length[n - 1][m];
+            max = mlcs_w(a, n, b, m - 1, length);
         }
 
-        // atualiza o valor de length[n][m]
         length[n][m] = max;
     }
 
@@ -56,9 +54,14 @@ int mlcs(char a[], int n, char b[], int m) {
     // inicializa a matriz;
     int length[MAX_SIZE + 1][MAX_SIZE + 1];
 
-    // chamada da funcao recusiva
-    mlcs_w(a, n, b, m, length);
+    // preenche os valores da matriz com -1
+    for(int linha = 0; linha <= n; linha++){
+        for  (int coluna = 0; coluna <= m; coluna++){
+            length[linha][coluna] = -1;
+        }
+    }
 
+    mlcs_w(a, n, b, m, length);
     return length[n][m];
 }
 
@@ -67,11 +70,9 @@ int dlcs(char a[], int n, char b[], int m) {
 
     for(int linha = 0; linha < n; linha++){
         for(int coluna = 0; coluna < m; coluna++){
-            if (linha == 0 || coluna == 0) {
-        // linha = or coluna = 0 
-                length[linha][0] = 0;
-                length[0][coluna] = 0;
-                //return 0;
+            if (linha == 0 || coluna == 0){
+                // linha = 0 or coluna = 0 
+                length[linha][coluna] = 0;
             }
 
             if(a[linha-1] == b[coluna-1]){
@@ -87,7 +88,6 @@ int dlcs(char a[], int n, char b[], int m) {
                 }
             }
         }
-        
     }
     return length[n][m];
     
