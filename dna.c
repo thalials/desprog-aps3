@@ -20,7 +20,7 @@ int mlcs_w(char a[], int n, char b[], int m, int length[MAX_SIZE + 1][MAX_SIZE +
     
     // menor caso
     if (n == 0 || m == 0) {
-        // n = 0 or m = 0 
+        // n = 0 ou m = 0 
         length[n][m] = 0;
         return 0;
     }
@@ -71,7 +71,7 @@ int dlcs(char a[], int n, char b[], int m) {
     for(int linha = 0; linha < n; linha++){
         for(int coluna = 0; coluna < m; coluna++){
             if (linha == 0 || coluna == 0){
-                // linha = 0 or coluna = 0 
+                // linha = 0 ou coluna = 0 
                 length[linha][coluna] = 0;
             }
 
